@@ -1,0 +1,82 @@
+.header {
+	width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+	text-align: center;
+	/* display: "flex"; */
+	justify-content: center;
+	align-items: center;
+	background-color: black ;  
+
+
+
+}
+.cards {
+	margin-left: 50%;
+	margin-top: 10vh;
+	margin-bottom: -6rem;
+
+}
+
+.App {
+
+	padding-top: 30vh;
+	padding-bottom: 5vh;
+	padding-left: 3rem;
+	width: 50vw;
+	display: block;
+	/* height: 70vh; */
+	/* align-items: center; */
+    justify-content: space-around;
+	background: rgb(255, 255, 255);
+	border-radius: 0.6rem;
+	box-shadow:0.3rem 0.3rem 0.9rem 0.6rem rgb(184, 182, 182);
+	margin-bottom: 5rem;
+
+
+}
+
+
+
+
+.inputBox {
+
+	justify-items: left;
+	width: 90%;
+	margin-bottom: 1rem;
+}
+label {
+	margin-bottom: 1rem;
+}
+
+input {
+	background: #f9f9f9;
+	padding: 1.4rem 0.5rem;
+	margin-top: 1rem;
+	width: 100%;
+	border: 0;
+	color: rgb(0, 0, 0);
+	outline: none;
+	font-weight: 300;
+	height: 1.1876em;
+
+}
+
+
+button {
+	width: 90%;
+	background: rgb(14, 140, 243);
+	color: white;
+	font-size: 1rem;
+	border: 0;
+}
+
+button:disabled {
+	background: rgb(209, 235, 248);
+	border: 0;
+  }
+
+/* .rccs__card--unknown > div {
+	background: #75c9a5;
+}  */
