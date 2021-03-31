@@ -48,9 +48,9 @@ const App = () => {
       
       const validate = /^[0-9]*$/;
       const amexRegex = /^(?:3[47][0-9]{13})$/;
-      const visaRegex = /^(?:4[0-9]{14})$/;
+      const visaRegex = /^(?:4[0-9]{15})$/;
       const mastercardRegex = /^(?:5[1-5][0-9]{14})$/;
-      const discoverRegex = /^(?:6(?:011|5[0-9][0-9])[0-9]{12})$/;
+      const discoverRegex = /^(?:(6011|5[0-9][0-9])[0-9]{12})$/;
       const dinersClubRegex = /^(?:3(?:0[0-5]|[68][0-9])[0-9]{11})$/;
       const jcbRegex = /^(?:(?:2131|1800|35\d{3})\d{11})$/;
       const unionPayRegex = /^(?:6211[0-9]{12})$/;
@@ -58,123 +58,110 @@ const App = () => {
       let str = inp.toString();
       let strArr = [];
       function strToArr(strNumber,strLength){
-         for (let i = 0; i < (strLength/4); i++)
-        {
-          strArr[i] = strNumber.substring(i*4, 4*(i+1));
-        }        
-        setNum(strArr.join(" ").trim()); 
+
+          for (let i = 0; i < (strLength/4); i++)
+          {
+            strArr[i] = strNumber.substring(i*4, 4*(i+1));
+          }        
+          setNum(strArr.join(" ").trim()); 
+
       }
-      let amex = amexRegex.test(event.target.value);
-      let visa = visaRegex.test(event.target.value); 
-      let mastercard = mastercardRegex.test(event.target.value);
-      let discover = discoverRegex.test(event.target.value);
-      let dinersClub = dinersClubRegex.test(event.target.value);
-      let jcb = jcbRegex.test(event.target.value);
-      let unionPay = unionPayRegex.test(event.target.value);
+
+      let amex = amexRegex.test(inp);
+      let visa = visaRegex.test(inp); 
+      let mastercard = mastercardRegex.test(inp);
+      let discover = discoverRegex.test(inp);
+      let dinersClub = dinersClubRegex.test(inp);
+      let jcb = jcbRegex.test(inp);
+      let unionPay = unionPayRegex.test(inp);
       
-      let isValid = validate.test(event.target.value);
+      let isValid = validate.test(inp);
         if (!str.length) 
         {
            setErrorMessage('Please input');
+           setNum("•••• •••• •••• ••••");
         } 
         else if(isValid === true)
         {          
-            setErrorMessage('');
-            if (str.length > 4) {
-              if (amex || jcb || (discover && str.startsWith("5") ===true)) 
+          setErrorMessage('');
+          if (str.length > 4) {
+            if (issuer==="amex" || (issuer==="jcb" && str.startsWith("2131")) 
+                || (issuer==="jcb" && str.startsWith("1800"))
+                || (issuer==="discover" && str.startsWith("5") ===true)) 
+            {
+              if (str.length > 15) 
               {
-                if (str.length > 15) 
-                {
-                  strToArr(str.slice(0, 15), str.length);
-                }else 
-                {
-                  strToArr(str,str.length);
-                }                
-              }else if (dinersClub)
+                strToArr(str.slice(0, 15), str.length);
+              }else 
               {
-                if (str.length > 14)
-                {
-                  strToArr(str.slice(0, 14),str.length);
-                }else {
-                  strToArr(str,str.length);
-                } 
-
+                strToArr(str,str.length);
+              }                
+            }else if (issuer==="dinersClub")
+            {
+              if (str.length > 14)
+              {
+                strToArr(str.slice(0, 14),str.length);
               }else {
                 strToArr(str,str.length);
-              }
+              } 
+
             }else {
-              setNum(str);
+              strToArr(str,str.length);
             }
-
-            if (amex) { 
-              if (num.length >15) {
-                // strToArr(str.slice(0, 15),str.length);
-                strToArr(str.slice(0, 15));
-                console.log(str);
-              }
-              
-
-              setIssuer("amex"); 
-              setBgColor("amexBgColor");
-              setValidNum(true);             
-            }else if (visa) {
-              strToArr(event.target.value.toString(),event.target.value.toString().length);
-              setIssuer("visa");
-              setBgColor("visaBgColor"); 
-              setCvn("•••") ;  
-              setValidNum(true);                          
-            }else if (mastercard) {
-              strToArr(event.target.value.toString(),event.target.value.toString().length);
-              setIssuer("mastercard");
-              setBgColor("mastercardBgColor"); 
-              setCvn("•••") ; 
-              setValidNum(true);            
-            }else if (discover) {
-              setIssuer("discover");
-              setBgColor("discoverBgColor");   
-              if (event.target.value.toString().startsWith("5")) {
-                strToArr(event.target.value.toString().slice(0, 14),event.target.value.toString().length);
-              }else{
-                strToArr(event.target.value.toString(),event.target.value.toString().length);
-              }
-              setIssuer("discover");
-              setBgColor("discoverBgColor");  
-              setValidNum(true);     
-            }else if (dinersClub) {
-              strToArr(event.target.value.toString().slice(0, 15),event.target.value.toString().length);  
-              setIssuer("dinersClub");
-              setBgColor("dinersClubBgColor"); 
-              setValidNum(true);    
-            }else if (jcb) {
-              if (event.target.value.toString().startsWith("2131")||
-                  event.target.value.toString().startsWith("1800")) 
-              {
-                strToArr(event.target.value.toString().slice(0, 16),event.target.value.toString().length);  
-              }else {
-                strToArr(event.target.value.toString(),event.target.value.toString().length);  
-              }
-              setIssuer("jcb");
-              setBgColor("jcbBgColor"); 
-              setValidNum(true);    
-            }else if (unionPay) {
-              strToArr(event.target.value.toString(),event.target.value.toString().length); 
-              setIssuer("unionPay");
-              setBgColor("unionPayBgColor");   
-              setValidNum(true);    
-            }
-            if (validName  && validNum  && validMonth  && validYear  && validCvn)
-            {
-              setBtnAvail(false);
-            };               
-        }else
+          }else{
+            setNum(str);
+          }
+          if (amex) { 
+            setIssuer("amex"); 
+            setBgColor("amexBgColor");
+            setValidNum(true);             
+          }else if (visa) {
+            setIssuer("visa");
+            setBgColor("visaBgColor"); 
+            setCvn("•••") ;  
+            setValidNum(true);                          
+          }else if (mastercard) {
+            setIssuer("mastercard");
+            setBgColor("mastercardBgColor"); 
+            setCvn("•••") ; 
+            setValidNum(true);            
+          }else if (discover) {
+            setIssuer("discover");
+            setBgColor("discoverBgColor");   
+            setIssuer("discover");
+            setBgColor("discoverBgColor");  
+            setValidNum(true);     
+          }else if (dinersClub) {
+            setIssuer("dinersClub");
+            setBgColor("dinersClubBgColor"); 
+            setValidNum(true);    
+          }else if (jcb) {
+            setIssuer("jcb");
+            setBgColor("jcbBgColor"); 
+            setValidNum(true);    
+          }else if (unionPay) {
+            setIssuer("unionPay");
+            setBgColor("unionPayBgColor");   
+            setValidNum(true);    
+          }else {
+            setIssuer("none");
+            setBgColor("bgColor ");   
+          }
+        if (validName  && validNum  && validMonth  && validYear  && validCvn)
+        {
+          setBtnAvail(false);
+        };               
+      }else
         {
             setErrorMessage('Enter valid CreditCard Number!'); 
         }
   }; 
 
   const monthChangeHandler = (event) => {
-      console.log(event.target.value) ; // debug
-      setMonth(event.target.value) ;
+      let inp = event.target.value;
+      let str = inp.toString();
+      console.log(str) ; // debug
+      setMonth(str) ;
       setValidMonth(true);
       if (validName  && validNum  && validMonth  && validYear  && validCvn)
       {
@@ -183,8 +170,10 @@ const App = () => {
   };
 
   const yearChangeHandler = (event) => {
-      console.log(event.target.value) ; // debug
-      setYear(event.target.value) ;
+      let inp = event.target.value;
+      let str = inp.toString();
+      console.log(inp) ; // debug
+      setYear(str) ;
       setValidYear(true);
       if (validName  && validNum  && validMonth  && validYear  && validCvn)
       {
@@ -193,20 +182,21 @@ const App = () => {
   };
 
   const cvnChangeHanlder = (event) => {
-       console.log(event.target.value) ; // debug
-       
+       let inp = event.target.value;
+       let str = inp.toString();
        const validate = /^[0-9]*$/;
-       let isValid = validate.test(event.target.value);
+       console.log(inp) ; // debug
+       let isValid = validate.test(inp);
        if(isValid === true)
        {  
 
            setErrorMessage('');
 
            if (issuer==="mastercard" ||issuer === "visa" ) {
-            setCvn(event.target.value.toString().slice(0, 3));
+            setCvn(str.slice(0, 3));
             setValidCvn(true);
            }else {
-            setCvn(event.target.value.toString());
+            setCvn(str);
             setValidCvn(true);
            }
            if (validName  && validNum  && validMonth  && validYear  && validCvn )
