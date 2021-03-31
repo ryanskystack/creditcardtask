@@ -14,12 +14,12 @@ const CardBack = ({ cvn, issuer, bgColor }) => {
         </div>
         <div className="rccs__signature">
         </div>
-        <div className={`rccs__issuer ${issuer}`
-                       }        
-        >
-        </div>
         <div className="rccs__cvc rccs--focused">
           {cvn}
+        </div>
+        <div className={`rccs__issuer issuer_back ${issuer}`
+                       }        
+        >
         </div>
       </div>  
     );

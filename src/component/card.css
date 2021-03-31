@@ -101,17 +101,23 @@
                 transform-style: preserve-3d;
             }
 
-           .issuer {
-                background-position: top right;
+           .rccs__issuer {
                 background-repeat: no-repeat;
                 background-size: contain;
                 height: 23%;
                 position: absolute;
                 right: 10%;
-                top: 10%;
                 width: 40%;
               }
-
+              .issuer_front {
+                top: 10%;
+                background-position: top right;
+            }
+            .issuer_back {
+                bottom: 20%;
+                background-position: bottom right;
+            }
+              
             .rccs__stripe {
                 background-color: #2a1d16;
                 height: 1.2rem;
@@ -128,7 +134,7 @@
                 left: 5%;
                 position: absolute;
                 top: 35%;
-                width: 16rem;
+                width: 18rem;
             }
 
             .rccs--focused {
@@ -142,7 +148,7 @@
             .rccs__cvc {
                 color: #222;
                 font-size: 1.2rem;
-                left: 67%;
+                left: 75%;
                 line-height: 1;
                 top: 38%;
                 transition: opacity .3s;

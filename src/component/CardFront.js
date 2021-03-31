@@ -13,7 +13,7 @@ const CardFront = ({ name, num, month, year, issuer, bgColor }) => {
         </div>
         <div className="rccs__chip">
         </div>
-        <div className={`rccs__issuer ${issuer}`
+        <div className={`rccs__issuer issuer_front ${issuer}`
                        }        
         >
         </div>

@@ -13,7 +13,7 @@ const App = () => {
   const [num, setNum] = useState("•••• •••• •••• ••••") ; 
   const [month, setMonth] = useState("••") ; 
   const [year, setYear] = useState("••") ; 
-  const [cvn, setCvn] = useState("•••") ; 
+  const [cvn, setCvn] = useState("••••") ; 
   const [errorMessage, setErrorMessage] = useState('') 
   const [btnAvail, setBtnAvail] = useState(true) ; 
   const [validName, setValidName] = useState(false) ; 
@@ -45,7 +45,6 @@ const App = () => {
   };
 
   const numChangeHandler = (event) => {
-      console.log(event.target.value) ; // debug
       
       const validate = /^[0-9]*$/;
       const amexRegex = /^(?:3[47][0-9]{13})$/;
@@ -55,6 +54,16 @@ const App = () => {
       const dinersClubRegex = /^(?:3(?:0[0-5]|[68][0-9])[0-9]{11})$/;
       const jcbRegex = /^(?:(?:2131|1800|35\d{3})\d{11})$/;
       const unionPayRegex = /^(?:6211[0-9]{12})$/;
+      let inp = event.target.value;
+      let str = inp.toString();
+      let strArr = [];
+      function strToArr(strNumber,strLength){
+         for (let i = 0; i < (strLength/4); i++)
+        {
+          strArr[i] = strNumber.substring(i*4, 4*(i+1));
+        }        
+        setNum(strArr.join(" ").trim()); 
+      }
       let amex = amexRegex.test(event.target.value);
       let visa = visaRegex.test(event.target.value); 
       let mastercard = mastercardRegex.test(event.target.value);
@@ -64,52 +73,94 @@ const App = () => {
       let unionPay = unionPayRegex.test(event.target.value);
       
       let isValid = validate.test(event.target.value);
-        if (!event.target.value.length) 
+        if (!str.length) 
         {
            setErrorMessage('Please input');
         } 
         else if(isValid === true)
-        {           
-          
+        {          
             setErrorMessage('');
-            setValidNum(true);
+            if (str.length > 4) {
+              if (amex || jcb || (discover && str.startsWith("5") ===true)) 
+              {
+                if (str.length > 15) 
+                {
+                  strToArr(str.slice(0, 15), str.length);
+                }else 
+                {
+                  strToArr(str,str.length);
+                }                
+              }else if (dinersClub)
+              {
+                if (str.length > 14)
+                {
+                  strToArr(str.slice(0, 14),str.length);
+                }else {
+                  strToArr(str,str.length);
+                } 
 
-            if (amex) {                           
-              setNum(event.target.value.toString().slice(0, 15));                          
+              }else {
+                strToArr(str,str.length);
+              }
+            }else {
+              setNum(str);
+            }
+
+            if (amex) { 
+              if (num.length >15) {
+                // strToArr(str.slice(0, 15),str.length);
+                strToArr(str.slice(0, 15));
+                console.log(str);
+              }
+              
+
               setIssuer("amex"); 
-              setBgColor("amexBgColor");             
+              setBgColor("amexBgColor");
+              setValidNum(true);             
             }else if (visa) {
+              strToArr(event.target.value.toString(),event.target.value.toString().length);
               setIssuer("visa");
-              setBgColor("visaBgColor");                        
+              setBgColor("visaBgColor"); 
+              setCvn("•••") ;  
+              setValidNum(true);                          
             }else if (mastercard) {
+              strToArr(event.target.value.toString(),event.target.value.toString().length);
               setIssuer("mastercard");
-              setBgColor("mastercardBgColor");   
+              setBgColor("mastercardBgColor"); 
+              setCvn("•••") ; 
+              setValidNum(true);            
             }else if (discover) {
               setIssuer("discover");
               setBgColor("discoverBgColor");   
               if (event.target.value.toString().startsWith("5")) {
-                setNum(event.target.value.toString().slice(0, 14));
+                strToArr(event.target.value.toString().slice(0, 14),event.target.value.toString().length);
               }else{
-                setNum(event.target.value.toString());
+                strToArr(event.target.value.toString(),event.target.value.toString().length);
               }
+              setIssuer("discover");
+              setBgColor("discoverBgColor");  
+              setValidNum(true);     
             }else if (dinersClub) {
+              strToArr(event.target.value.toString().slice(0, 15),event.target.value.toString().length);  
               setIssuer("dinersClub");
-              setBgColor("dinersClubBgColor");   
-              setNum(event.target.value.toString().slice(0, 13));
+              setBgColor("dinersClubBgColor"); 
+              setValidNum(true);    
             }else if (jcb) {
-              setIssuer("jcb");
-              setBgColor("jcbBgColor");   
               if (event.target.value.toString().startsWith("2131")||
                   event.target.value.toString().startsWith("1800")) 
               {
-               setNum(event.target.value.toString().slice(0, 4));
+                strToArr(event.target.value.toString().slice(0, 16),event.target.value.toString().length);  
               }else {
-                setNum(event.target.value.toString());
+                strToArr(event.target.value.toString(),event.target.value.toString().length);  
               }
+              setIssuer("jcb");
+              setBgColor("jcbBgColor"); 
+              setValidNum(true);    
             }else if (unionPay) {
+              strToArr(event.target.value.toString(),event.target.value.toString().length); 
               setIssuer("unionPay");
               setBgColor("unionPayBgColor");   
-              setNum(event.target.value.toString());
+              setValidNum(true);    
             }
             if (validName  && validNum  && validMonth  && validYear  && validCvn)
             {
@@ -150,11 +201,13 @@ const App = () => {
        {  
 
            setErrorMessage('');
-           setValidCvn(true);
-           if (issuer=="mastercard" ||issuer == "visa" ) {
+
+           if (issuer==="mastercard" ||issuer === "visa" ) {
             setCvn(event.target.value.toString().slice(0, 3));
+            setValidCvn(true);
            }else {
             setCvn(event.target.value.toString());
+            setValidCvn(true);
            }
            if (validName  && validNum  && validMonth  && validYear  && validCvn )
            {
