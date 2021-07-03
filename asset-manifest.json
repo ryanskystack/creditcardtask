@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/creditcardtask/static/css/main.62e289ae.chunk.css",
+    "main.js": "/creditcardtask/static/js/main.2c9b92c6.chunk.js",
+    "main.js.map": "/creditcardtask/static/js/main.2c9b92c6.chunk.js.map",
+    "runtime-main.js": "/creditcardtask/static/js/runtime-main.7cef6122.js",
+    "runtime-main.js.map": "/creditcardtask/static/js/runtime-main.7cef6122.js.map",
+    "static/css/2.31461e4f.chunk.css": "/creditcardtask/static/css/2.31461e4f.chunk.css",
+    "static/js/2.cbfaff9e.chunk.js": "/creditcardtask/static/js/2.cbfaff9e.chunk.js",
+    "static/js/2.cbfaff9e.chunk.js.map": "/creditcardtask/static/js/2.cbfaff9e.chunk.js.map",
+    "index.html": "/creditcardtask/index.html",
+    "static/css/2.31461e4f.chunk.css.map": "/creditcardtask/static/css/2.31461e4f.chunk.css.map",
+    "static/css/main.62e289ae.chunk.css.map": "/creditcardtask/static/css/main.62e289ae.chunk.css.map",
+    "static/js/2.cbfaff9e.chunk.js.LICENSE.txt": "/creditcardtask/static/js/2.cbfaff9e.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.7cef6122.js",
+    "static/css/2.31461e4f.chunk.css",
+    "static/js/2.cbfaff9e.chunk.js",
+    "static/css/main.62e289ae.chunk.css",
+    "static/js/main.2c9b92c6.chunk.js"
+  ]
+}
